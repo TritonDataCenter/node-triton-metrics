@@ -1,0 +1,4 @@
+/tmp
+*.pyc
+*.pyo
+/node_modules
