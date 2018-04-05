@@ -12,12 +12,12 @@ npm install triton-metrics
 
 # Examples
 
-This library has only been tested with Restify 4.3.x, but may work with other versions.
+This library has only been tested with Restify 4.x, but may work with other versions.
 
 Create the `MetricsManager` object:
 ```js
 var createMetricsManager = require('triton-metrics').createMetricsManager;
-var restify = require('restify') // This has only been tested with Restify 4.3.x
+var restify = require('restify') // This has only been tested with Restify 4.x
 
 var metricsManager = createMetricsManager({
     address: config.address,
@@ -123,7 +123,7 @@ Accepts an options object and returns a new `MetricsManager` object.
 
 * `options` -- Object. All options are required.
     * `log`: A [bunyan](https://github.com/trentm/node-bunyan) logger.
-    * `restify`: Restify library. Support is only guaranteed for version 4.3.x.
+    * `restify`: Restify library. Support is only guaranteed for version 4.x.
     * `staticLabels`: An object that includes labels to be attached to every collector.
         * `datacenter`: String, datacenter name.
         * `instance`: String, instance UUID.
