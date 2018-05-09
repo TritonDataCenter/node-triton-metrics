@@ -127,6 +127,7 @@ Accepts an options object and returns a new `MetricsManager` object.
     * `staticLabels`: An object that includes labels to be attached to every collector.
         * `datacenter`: String, datacenter name.
         * `instance`: String, instance UUID.
+        * `port`: Number, optional, metrics server port. Helpful when multiple instances of a service are running in the same zone.
         * `server`: String, server UUID.
         * `service`: String, service name.
     * `address`: String, the metrics server address.
