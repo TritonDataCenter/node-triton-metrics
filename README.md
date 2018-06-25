@@ -180,6 +180,16 @@ Both metrics add the following labels:
 * route (e.g. 'listvms')
 * user_agent (only the first token e.g. restify/1.5.2) 
 
+#### `MetricsManager.addPreCollectFunc(function (callback))`
+
+Adds a function with the signature `function (callback)` to the list of
+functions that will be called just before collecting the metrics. This is
+intended to be used for things like `gauge.set(value)` to set a value just
+before collection in cases where setting the value constantly might be otherwise
+expensive.
+
+The function provided *must* call callback() when completed *with no arguments*.
+
 #### `MetricsManager#collector`
 Artedi collector. Each metric needs to be added to this collector
 

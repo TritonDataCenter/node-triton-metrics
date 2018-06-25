@@ -1,6 +1,6 @@
 {
   "name": "triton-metrics",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Artedi-based metrics manager for Triton core services",
   "main": "./lib/index.js",
   "repository": {
@@ -17,6 +17,7 @@
     "artedi": "1.3.0",
     "assert-plus": "1.0.0",
     "bunyan": "1.8.12",
+    "vasync": "2.2.0",
     "verror": "1.10.0"
   },
   "devDependencies": {
@@ -27,8 +28,7 @@
     "prettier": "1.9.1",
     "restify": "4.3.2",
     "restify-clients": "2.0.0",
-    "tape": "4.9.0",
-    "vasync": "2.2.0"
+    "tape": "4.9.0"
   },
   "peerDependencies": {
     "restify": "4.x"
