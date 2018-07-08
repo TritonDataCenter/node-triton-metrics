@@ -51,8 +51,7 @@ var metricsManager = createMetricsManager({
 });
 
 metricsManager.createRestifyMetrics();
-metricsManager.createGCMetrics();
-metricsManager.createNodeMetrics();
+metricsManager.createNodejsMetrics();
 
 metricsManager.listen(function metricsServerStarted() {
     var server = restify.createServer({
@@ -70,7 +69,7 @@ metricsManager.listen(function metricsServerStarted() {
 
     server.on('after', function _doLogging(req, res, route, err) {
         metricsManager.collectRestifyMetrics(req, res, route);
-        restify.auditLogger({log: log})(req, res, route, err);
+        // restify.auditLogger({log: log})(req, res, route, err);
     });
 
     server.listen(8888, '127.0.0.1', function _onListen() {
