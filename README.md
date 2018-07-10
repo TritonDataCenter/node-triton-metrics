@@ -171,13 +171,15 @@ include:
 * nodejs_V8_used_heap_size_bytes
 * nodejs_active_handles_count
 * nodejs_active_requests_count
-* nodejs_eventloop_lag_samples_total
 * nodejs_eventloop_lag_seconds_total
-* nodejs_eventloop_loop_count_total
 * nodejs_eventloop_max_lag_seconds
+* nodejs_eventloop_max_tick_count
 * nodejs_eventloop_max_time_seconds
 * nodejs_eventloop_min_lag_seconds
+* nodejs_eventloop_min_tick_count
 * nodejs_eventloop_min_time_seconds
+* nodejs_eventloop_samples_total
+* nodejs_eventloop_tick_count_total
 * nodejs_eventloop_time_seconds_total
 * nodejs_gc_execution_count_total
 * nodejs_gc_pause_seconds_total
