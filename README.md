@@ -160,8 +160,14 @@ Parameters
 * ...args -- An arbitrary number of arguments to be passed to the `collectMetrics` function specified in `createMetrics`.
 
 #### `MetricsManager.createNodejsMetrics()`
-Adds several metrics indicating internal state of the node process. These
-include:
+
+Important: These metrics are considered experimental/uncommitted. The specific
+metrics exposed are expected to change without separate notice. Do not be
+surprised if you build things relying on this data when some keys disappear in a
+future version, keys are renamed, or new metrics are added.
+
+Running this function adds several metrics indicating internal state of the node
+process. These include currently:
 
 * nodejs_V8_heap_size_executable_bytes
 * nodejs_V8_heap_size_limit_bytes
