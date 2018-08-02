@@ -159,6 +159,44 @@ Parameters
 * name -- String, the name of the metrics group.
 * ...args -- An arbitrary number of arguments to be passed to the `collectMetrics` function specified in `createMetrics`.
 
+#### `MetricsManager.createNodejsMetrics()`
+
+Important: These metrics are considered experimental/uncommitted. The specific
+metrics exposed are expected to change without separate notice. Do not be
+surprised if you build things relying on this data when some keys disappear in a
+future version, keys are renamed, or new metrics are added.
+
+Running this function adds several metrics indicating internal state of the node
+process. These include currently:
+
+* nodejs_V8_heap_size_executable_bytes
+* nodejs_V8_heap_size_limit_bytes
+* nodejs_V8_total_available_size_bytes
+* nodejs_V8_total_heap_size_bytes
+* nodejs_V8_total_physical_size_bytes
+* nodejs_V8_used_heap_size_bytes
+* nodejs_active_handles_count
+* nodejs_active_requests_count
+* nodejs_eventloop_lag_seconds_total
+* nodejs_eventloop_max_lag_seconds
+* nodejs_eventloop_max_tick_count
+* nodejs_eventloop_max_time_seconds
+* nodejs_eventloop_min_lag_seconds
+* nodejs_eventloop_min_tick_count
+* nodejs_eventloop_min_time_seconds
+* nodejs_eventloop_samples_total
+* nodejs_eventloop_tick_count_total
+* nodejs_eventloop_time_seconds_total
+* nodejs_gc_execution_count_total
+* nodejs_gc_pause_seconds_total
+* nodejs_memory_external_bytes
+* nodejs_memory_heapTotal_bytes
+* nodejs_memory_heapUsed_bytes
+* nodejs_memory_rss_bytes
+* nodejs_process_start_time_seconds
+* nodejs_system_cpu_seconds_total
+* nodejs_user_cpu_seconds_total
+
 #### `MetricsManager.createRestifyMetrics()`
 Adds a `restify` metrics group that includes common metrics to be collected from a Restify server -- a [counter](lib/metrics-manager.js#L119) to track http requests and a [histogram](lib/metrics-manager.js#L124) to track the time to process requests
 

@@ -4,6 +4,13 @@
 
 (nothing yet)
 
+## 0.3.0
+
+- Add support for `metricsManager.collectNodejsMetrics()` which will collect a
+  number of metrics about the node process including: eventloop time and lag,
+  memory and CPU counters, V8 heap statistics, garbage collection, and process
+  start time.
+
 ## 0.2.0
 
 - Add support for `metricsManager.addPreCollectFunc(function (callback))` which
