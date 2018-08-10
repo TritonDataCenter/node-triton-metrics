@@ -4,6 +4,10 @@
 
 (nothing yet)
 
+## 0.3.1
+
+- Fix missing "gc-stats" dependency in package.json
+
 ## 0.3.0
 
 - Add support for `metricsManager.collectNodejsMetrics()` which will collect a
