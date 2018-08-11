@@ -4,6 +4,11 @@
 
 (nothing yet)
 
+## 0.3.2
+
+- Add support for metricsManager to listen on a socket. config.port can now be 
+  a number or a string. If it's a number, then config.address is not required.
+
 ## 0.3.1
 
 - Fix missing "gc-stats" dependency in package.json
