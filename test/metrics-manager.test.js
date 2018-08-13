@@ -23,12 +23,19 @@ var helper = require('./helpers');
 var tritonMetrics = require('..');
 
 var metricsManager;
+var socketMetricsManager;
 var promLabels;
 
 var client = restifyClients.createStringClient({
     connectTimeout: 250,
     retry: false,
     url: 'http://localhost:8881/metrics'
+});
+
+var socketClient = restifyClients.createStringClient({
+    connectTimeout: 250,
+    retry: false,
+    socketPath: './test.sock'
 });
 
 test('setup', function(t) {
@@ -223,6 +230,64 @@ test('create arbitrary metrics group', function(t) {
     });
 });
 
+test('setup socket server', function(t) {
+    var staticLabels = {
+        datacenter: 'test-datacenter',
+        instance: 'test-instance',
+        server: 'test-server',
+        service: 'test-service'
+    };
+
+    socketMetricsManager = tritonMetrics.createMetricsManager({
+        log: bunyan.createLogger({
+            name: 'metrics_test',
+            level: process.env['LOG_LEVEL'] || 'error',
+            stream: process.stderr
+        }),
+        staticLabels: staticLabels,
+        path: './test.sock',
+        restify: restify
+    });
+
+    t.ok(socketMetricsManager);
+    t.end();
+});
+
+test('start socket server', function(t) {
+    vasync.pipeline(
+        {
+            funcs: [
+                function startServer(_, next) {
+                    socketMetricsManager.listen(function serverStarted() {
+                        next();
+                    });
+                },
+                function pingServer(_, next) {
+                    socketClient.get('/metrics', function(err, req, res, data) {
+                        t.error(err);
+                        t.equal(
+                            res.statusCode,
+                            200,
+                            'The status code should be 200'
+                        );
+                        t.equal(data, '', 'response data should be empty');
+                        next();
+                    });
+                }
+            ]
+        },
+        t.end
+    );
+});
+
 test('teardown', function(t) {
-    metricsManager.server.close(t.end);
+    vasync.parallel(
+        {
+            funcs: [
+                metricsManager.server.close,
+                socketMetricsManager.server.close
+            ]
+        },
+        t.end
+    );
 });

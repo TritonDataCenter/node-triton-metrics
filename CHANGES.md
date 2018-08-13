@@ -6,8 +6,8 @@
 
 ## 0.3.2
 
-- Add support for metricsManager to listen on a socket. config.port can now be 
-  a number or a string. If it's a number, then config.address is not required.
+- Add support for metricsManager to listen on a socket. A socket path can be specified
+  via the options.path property passed to `createMetricsManager`.
 
 ## 0.3.1
 

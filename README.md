@@ -131,7 +131,8 @@ Accepts an options object and returns a new `MetricsManager` object.
         * `server`: String, server UUID.
         * `service`: String, service name.
     * `address`: String, optional if port is a socket, the metrics server address.
-    * `port`: Number or string, the metrics server port or socket.
+    * `path`: String, optional if port is defined, the metrics server socket path.
+    * `port`: Number, optional if path is defined, the metrics server port number.
 
 #### `MetricsManager.listen(callback)`
 Starts the metrics server.
