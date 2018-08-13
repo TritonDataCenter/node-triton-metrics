@@ -284,8 +284,8 @@ test('teardown', function(t) {
     vasync.parallel(
         {
             funcs: [
-                metricsManager.server.close,
-                socketMetricsManager.server.close
+                metricsManager.server.close.bind(metricsManager),
+                socketMetricsManager.server.close.bind(socketMetricsManager)
             ]
         },
         t.end
