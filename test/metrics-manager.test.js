@@ -238,6 +238,8 @@ test('setup socket server', function(t) {
     fs.unlink(serverPath, function unlinked(err) {
         if (err && err.code !== 'ENOENT') {
             t.error(err);
+            t.end();
+            return;
         }
 
         var staticLabels = {
