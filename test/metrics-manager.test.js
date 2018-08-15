@@ -14,6 +14,7 @@
 
 var bunyan = require('bunyan');
 var format = require('util').format;
+var fs = require('fs');
 var restify = require('restify');
 var restifyClients = require('restify-clients');
 var test = require('tape');
@@ -223,6 +224,82 @@ test('create arbitrary metrics group', function(t) {
     });
 });
 
+var serverPath = './socket-test.sock';
+var socketClient = restifyClients.createStringClient({
+    connectTimeout: 250,
+    retry: false,
+    socketPath: serverPath
+});
+
+var socketMetricsManager;
+
+test('setup socket server', function(t) {
+    // Cleanup old server if last test run failed before teardown
+    fs.unlink(serverPath, function unlinked(err) {
+        if (err && err.code !== 'ENOENT') {
+            t.error(err);
+            t.end();
+            return;
+        }
+
+        var staticLabels = {
+            datacenter: 'test-datacenter',
+            instance: 'test-instance',
+            server: 'test-server',
+            service: 'test-service'
+        };
+
+        socketMetricsManager = tritonMetrics.createMetricsManager({
+            log: bunyan.createLogger({
+                name: 'metrics_test',
+                level: process.env['LOG_LEVEL'] || 'error',
+                stream: process.stderr
+            }),
+            staticLabels: staticLabels,
+            path: serverPath,
+            restify: restify
+        });
+
+        t.ok(socketMetricsManager);
+        t.end();
+    });
+});
+
+test('start socket server', function(t) {
+    vasync.pipeline(
+        {
+            funcs: [
+                function startServer(_, next) {
+                    socketMetricsManager.listen(function serverStarted() {
+                        next();
+                    });
+                },
+                function pingServer(_, next) {
+                    socketClient.get('/metrics', function(err, req, res, data) {
+                        t.error(err);
+                        t.equal(
+                            res.statusCode,
+                            200,
+                            'The status code should be 200'
+                        );
+                        t.equal(data, '', 'response data should be empty');
+                        next();
+                    });
+                }
+            ]
+        },
+        t.end
+    );
+});
+
 test('teardown', function(t) {
-    metricsManager.server.close(t.end);
+    vasync.parallel(
+        {
+            funcs: [
+                metricsManager.server.close.bind(metricsManager),
+                socketMetricsManager.server.close.bind(socketMetricsManager)
+            ]
+        },
+        t.end
+    );
 });

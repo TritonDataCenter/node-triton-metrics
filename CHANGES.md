@@ -4,6 +4,11 @@
 
 (nothing yet)
 
+## 0.4.0
+
+- Add support for metricsManager to listen on a socket. A socket path can be specified
+  via the options.path property passed to `createMetricsManager`.
+
 ## 0.3.1
 
 - Fix missing "gc-stats" dependency in package.json

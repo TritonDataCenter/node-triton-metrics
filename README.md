@@ -121,7 +121,7 @@ http_request_duration_seconds_sum{route="ping",method="GET",user_agent="curl/7.4
 #### `createMetricsManager(options)`
 Accepts an options object and returns a new `MetricsManager` object.
 
-* `options` -- Object. All options are required.
+* `options` -- Object. All options are required unless noted otherwise.
     * `log`: A [bunyan](https://github.com/trentm/node-bunyan) logger.
     * `restify`: Restify library. Support is only guaranteed for version 4.x.
     * `staticLabels`: An object that includes labels to be attached to every collector.
@@ -130,8 +130,9 @@ Accepts an options object and returns a new `MetricsManager` object.
         * `port`: Number, optional, metrics server port. Helpful when multiple instances of a service are running in the same zone.
         * `server`: String, server UUID.
         * `service`: String, service name.
-    * `address`: String, the metrics server address.
-    * `port`: Number, the metrics server port.
+    * `address`: String, required if port is defined, the metrics server address.
+    * `path`: String, required if port is not defined, the metrics server socket path.
+    * `port`: Number, required if path is not defined, the metrics server port number.
 
 #### `MetricsManager.listen(callback)`
 Starts the metrics server.
