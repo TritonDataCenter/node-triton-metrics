@@ -1,6 +1,6 @@
 {
   "name": "triton-metrics",
-  "version": "0.4.0",
+  "version": "1.0.0",
   "description": "Artedi-based metrics manager for Triton core services",
   "main": "./lib/index.js",
   "repository": {
@@ -14,7 +14,7 @@
   },
   "homepage": "https://github.com/joyent/node-triton-metrics",
   "dependencies": {
-    "artedi": "1.4.1",
+    "artedi": "git+https://github.com/joyent/node-artedi.git#fixed-buckets",
     "assert-plus": "1.0.0",
     "bunyan": "1.8.12",
     "event-loop-stats": "1.0.0",
