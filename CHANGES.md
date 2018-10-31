@@ -4,6 +4,11 @@
 
 (nothing yet)
 
+## 1.0.0
+
+- Switch to artedi-v2.
+- Redo how buckets work for histograms.
+
 ## 0.4.0
 
 - Add support for metricsManager to listen on a socket. A socket path can be specified
