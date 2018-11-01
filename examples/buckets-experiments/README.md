@@ -525,8 +525,16 @@ buckets in the future. We've discussed adding support for a `buckets_version`
 label in the future which could allow us to change buckets without having to
 drop all existing data.
 
+The way I imagine future buckets changes to come about is due to someone
+comparing the histogram data to some other known-correct data (logs, dtrace,
+experiments, etc) and finding that the histogram is showing features that are
+not there, or not showing features that should be there. At that point isolating
+the specific issue and potentially adding buckets to increase the resolution and
+avoid the issue might make sense.
+
 One other conclusion I've reached while going through these experiments is that
 with the current rate of outliers, P99.9 is mostly useless from an accuracy
 standpoint. P99 is *much* more accurate. Though P99.9 can be useful if we wish
 to have giant spikes whenever there's an outlier, despite that not being an
 accurate representation of P99.9.
+
