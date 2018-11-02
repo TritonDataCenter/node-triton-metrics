@@ -260,7 +260,7 @@ metricsManager = tritonMetrics.createMetricsManager({
         http_request_duration_seconds: {
             buckets: [1, 2, 3, 4],
             labels: {
-                buckets_version: 1
+                buckets_version: 'myapi.1'
             }
         }
     },
@@ -273,14 +273,14 @@ when setting the buckets for your histogram. Then you should increment the
 write your queries for prometheus as:
 
 ```
-histogram_quantile(0.95, sum(rate(http_request_duration_seconds{buckets_version="1"}[5m])) by (le))
+histogram_quantile(0.95, sum(rate(http_request_duration_seconds{buckets_version="myapi.1"}[5m])) by (le))
 ```
 
 and in doing so you can be sure that you're always doing a quantile on the same
-buckets. When you introduce `buckets_version="2"` you can then add this as a
-separate query on your graphs (each instance will only have data for one or the
-other) and you will not need to delete all old data in the prometheus store but
-will still avoid the problems discussed in
+buckets. When you introduce `buckets_version="myapi.2"` you can then add this as
+a separate query on your graphs (each instance will only have data for one or
+the other) and you will not need to delete all old data in the prometheus store
+but will still avoid the problems discussed in
 [node-artedi#17](https://github.com/joyent/node-artedi/pull/17).
 
 # Development
