@@ -137,6 +137,18 @@ Accepts an options object and returns a new `MetricsManager` object.
     * `path`: String, required if port is not defined, the metrics server socket path.
     * `port`: Number, required if path is not defined, the metrics server port number.
 
+#### `linearBuckets(min, width, count)`
+
+This is just exposing the node artedi bucket generator function. See: [https://github.com/joyent/node-artedi/blob/master/docs/API.md#bucket-generators](https://github.com/joyent/node-artedi/blob/master/docs/API.md#bucket-generators)
+
+#### `exponentialBuckets(min, factor, count)`
+
+This is just exposing the node artedi bucket generator function. See: [https://github.com/joyent/node-artedi/blob/master/docs/API.md#bucket-generators](https://github.com/joyent/node-artedi/blob/master/docs/API.md#bucket-generators)
+
+#### `logLinearBuckets(base, lowPower, highPower, bucketsPerMagnitude)`
+
+This is just exposing the node artedi bucket generator function. See: [https://github.com/joyent/node-artedi/blob/master/docs/API.md#bucket-generators](https://github.com/joyent/node-artedi/blob/master/docs/API.md#bucket-generators)
+
 #### `MetricsManager.listen(callback)`
 Starts the metrics server.
 
@@ -234,18 +246,6 @@ The function provided *must* call callback() when completed *with no arguments*.
 
 #### `MetricsManager#collector`
 Artedi collector. Each metric needs to be added to this collector
-
-#### `MetricsManager.linearBuckets(min, width, count)`
-
-This is just exposing the node artedi bucket generator function. See: [https://github.com/joyent/node-artedi/blob/master/docs/API.md#bucket-generators](https://github.com/joyent/node-artedi/blob/master/docs/API.md#bucket-generators)
-
-#### `MetricsManager.exponentialBuckets(min, factor, count)`
-
-This is just exposing the node artedi bucket generator function. See: [https://github.com/joyent/node-artedi/blob/master/docs/API.md#bucket-generators](https://github.com/joyent/node-artedi/blob/master/docs/API.md#bucket-generators)
-
-#### `MetricsManager.logLinearBuckets(base, lowPower, highPower, bucketsPerMagnitude)`
-
-This is just exposing the node artedi bucket generator function. See: [https://github.com/joyent/node-artedi/blob/master/docs/API.md#bucket-generators](https://github.com/joyent/node-artedi/blob/master/docs/API.md#bucket-generators)
 
 # Histogram buckets and versioning
 

@@ -177,43 +177,19 @@ test('test default histogram buckets', function(t) {
     });
 });
 
-test('setup', function(t) {
-    var shortUserAgent = client.headers['user-agent'].split(' ')[0];
-    promLabels = [
-        format('datacenter="%s"', staticLabels.datacenter),
-        format('instance="%s"', staticLabels.instance),
-        format('route="%s"', 'getmetrics'),
-        format('server="%s"', staticLabels.server),
-        format('service="%s"', staticLabels.service),
-        format('status_code="%d"', 200),
-        format('user_agent="%s"', shortUserAgent)
-    ];
-
-    metricsManager = tritonMetrics.createMetricsManager({
-        log: logger,
-        staticLabels: staticLabels,
-        address: '127.0.0.1',
-        port: 8881,
-        restify: restify
-    });
-
-    t.ok(metricsManager);
-    t.end();
-});
-
 test('ensure bucket generators work', function(t) {
     t.deepEqual(
-        metricsManager.linearBuckets(0.5, 0.5, 10),
+        tritonMetrics.linearBuckets(0.5, 0.5, 10),
         [0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5],
-        'metricsManager.linearBuckets'
+        'tritonMetrics.linearBuckets'
     );
     t.deepEqual(
-        metricsManager.exponentialBuckets(1, 2, 5),
+        tritonMetrics.exponentialBuckets(1, 2, 5),
         [1, 2, 4, 8, 16],
-        'metricsManager.exponentialBuckets'
+        'tritonMetrics.exponentialBuckets'
     );
     t.deepEqual(
-        metricsManager.logLinearBuckets(10, -2, 1, 5),
+        tritonMetrics.logLinearBuckets(10, -2, 1, 5),
         [
             0.02,
             0.04,
@@ -236,9 +212,33 @@ test('ensure bucket generators work', function(t) {
             80,
             100
         ],
-        'metricsManager.logLinearBuckets'
+        'tritonMetrics.logLinearBuckets'
     );
 
+    t.end();
+});
+
+test('setup', function(t) {
+    var shortUserAgent = client.headers['user-agent'].split(' ')[0];
+    promLabels = [
+        format('datacenter="%s"', staticLabels.datacenter),
+        format('instance="%s"', staticLabels.instance),
+        format('route="%s"', 'getmetrics'),
+        format('server="%s"', staticLabels.server),
+        format('service="%s"', staticLabels.service),
+        format('status_code="%d"', 200),
+        format('user_agent="%s"', shortUserAgent)
+    ];
+
+    metricsManager = tritonMetrics.createMetricsManager({
+        log: logger,
+        staticLabels: staticLabels,
+        address: '127.0.0.1',
+        port: 8881,
+        restify: restify
+    });
+
+    t.ok(metricsManager);
     t.end();
 });
 

@@ -9,7 +9,7 @@
 - Switch to artedi-v2.
 - Redo how buckets work for histograms. Now have node-triton-metrics default
   buckets which can be overridden by caller.
-- Expose bucket generator functions on MetricsManager objects.
+- Expose bucket generator functions.
 
 ## 0.4.0
 
