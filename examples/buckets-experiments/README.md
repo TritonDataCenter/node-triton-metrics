@@ -53,7 +53,7 @@ Before you can run the experimental sample through our simulator, you'll need to
 setup your environment. The easiest way to do this is to run:
 
 ```
-mkdir -p node_modules && npm isntall tabula assert-plus
+mkdir -p node_modules && npm install tabula assert-plus
 ```
 
 once you've installed these prerequisites, you can move on to the experiments.
@@ -103,14 +103,13 @@ $
 
 the output here is pretty verbose. Unless you're debugging the tool itself, you
 can ignore the first part and focus on the SUMMARY section. The first thing here
-is a re-output of the buckets we're using. Bundled together by base-10
+is a re-output of the buckets we're using bundled together by base-10
 magnitude. The values in the square brackets are duplicated from the previous
-line in attempt to make it clearer what's going on. With Prometheus values are
+line in an attempt to make it clearer what's going on. Prometheus values are
 always `<=` the bucket value, so in this case for example while 0.1 is
 technically in the 10^-1 magnitude, the values 0.05 to 0.1 are all in the 0.1
 bucket, so it really also belongs on the previous line. The value will only
-actually appear once in the array that we actually use. This notation is just
-for display to humans.
+actually appear once in the array that we actually use.
 
 The last section is where all the data is. The `%ILE` column should be pretty
 straight-forward. This is the percentile that the rest of the row represents.
