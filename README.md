@@ -130,9 +130,24 @@ Accepts an options object and returns a new `MetricsManager` object.
         * `port`: Number, optional, metrics server port. Helpful when multiple instances of a service are running in the same zone.
         * `server`: String, server UUID.
         * `service`: String, service name.
+    * `metricOpts`: An object containing additional labels and/or buckets for the specified metrics. Keys must be metric names, values are objects with:
+        * `buckets`: Array of numbers (buckets), only used for histograms
+        * `labels`: Object containing additional labels (key: value) that will be added for this specific metric.
     * `address`: String, required if port is defined, the metrics server address.
     * `path`: String, required if port is not defined, the metrics server socket path.
     * `port`: Number, required if path is not defined, the metrics server port number.
+
+#### `linearBuckets(min, width, count)`
+
+This is just exposing the node artedi bucket generator function. See: [https://github.com/joyent/node-artedi/blob/master/docs/API.md#bucket-generators](https://github.com/joyent/node-artedi/blob/master/docs/API.md#bucket-generators)
+
+#### `exponentialBuckets(min, factor, count)`
+
+This is just exposing the node artedi bucket generator function. See: [https://github.com/joyent/node-artedi/blob/master/docs/API.md#bucket-generators](https://github.com/joyent/node-artedi/blob/master/docs/API.md#bucket-generators)
+
+#### `logLinearBuckets(base, lowPower, highPower, bucketsPerMagnitude)`
+
+This is just exposing the node artedi bucket generator function. See: [https://github.com/joyent/node-artedi/blob/master/docs/API.md#bucket-generators](https://github.com/joyent/node-artedi/blob/master/docs/API.md#bucket-generators)
 
 #### `MetricsManager.listen(callback)`
 Starts the metrics server.
@@ -232,6 +247,41 @@ The function provided *must* call callback() when completed *with no arguments*.
 #### `MetricsManager#collector`
 Artedi collector. Each metric needs to be added to this collector
 
+# Histogram buckets and versioning
+
+It is expected that if you are adding custom buckets in your application, you'll
+want to eventually also be able to change those buckets. In order to do this it
+is recommended that you do something like:
+
+```
+metricsManager = tritonMetrics.createMetricsManager({
+    ...
+    metricOpts: {
+        http_request_duration_seconds: {
+            buckets: [1, 2, 3, 4],
+            labels: {
+                buckets_version: 'myapi.1'
+            }
+        }
+    },
+    ...
+});
+```
+
+when setting the buckets for your histogram. Then you should increment the
+`buckets_version` value every time you change your buckets. This way, you can
+write your queries for prometheus as:
+
+```
+histogram_quantile(0.95, sum(rate(http_request_duration_seconds{buckets_version="myapi.1"}[5m])) by (le))
+```
+
+and in doing so you can be sure that you're always doing a quantile on the same
+buckets. When you introduce `buckets_version="myapi.2"` you can then add this as
+a separate query on your graphs (each instance will only have data for one or
+the other) and you will not need to delete all old data in the prometheus store
+but will still avoid the problems discussed in
+[node-artedi#17](https://github.com/joyent/node-artedi/pull/17).
 
 # Development
 
