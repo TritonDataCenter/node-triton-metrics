@@ -5,7 +5,7 @@
  */
 
 /*
- * Copyright (c) 2018, Joyent, Inc.
+ * Copyright (c) 2019, Joyent, Inc.
  */
 
 /*
@@ -36,8 +36,9 @@ var staticLabels = {
 
 var client = restifyClients.createStringClient({
     connectTimeout: 250,
+    agent: false,
     retry: false,
-    url: 'http://localhost:8881/metrics'
+    url: 'http://127.0.0.1:8881/metrics'
 });
 
 var logger = bunyan.createLogger({
@@ -278,6 +279,15 @@ test('add restify metrics', function(t) {
     });
 });
 
+test('add node metrics', function(t) {
+    metricsManager.createNodejsMetrics();
+
+    client.get('/metrics', function(_, req, res, data) {
+        t.ok(data, 'response data should not be empty');
+        t.end();
+    });
+});
+
 test('add after handler and seed metrics', function(t) {
     metricsManager.server.on(
         'after',
@@ -464,8 +474,8 @@ test('teardown', function(t) {
     vasync.parallel(
         {
             funcs: [
-                metricsManager.server.close.bind(metricsManager),
-                socketMetricsManager.server.close.bind(socketMetricsManager)
+                metricsManager.close.bind(metricsManager),
+                socketMetricsManager.close.bind(socketMetricsManager)
             ]
         },
         t.end

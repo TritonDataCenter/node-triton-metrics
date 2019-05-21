@@ -4,6 +4,10 @@
 
 (nothing yet)
 
+## 1.0.1
+
+- Fix issue with graceful shutdown when using `metricsManager.createNodejsMetrics()`
+
 ## 1.0.0
 
 - Switch to artedi-v2.
