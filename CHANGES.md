@@ -4,6 +4,11 @@
 
 (nothing yet)
 
+## 1.0.2
+
+- TRITON-1688 Remove extraneous files from the published set to just those
+  needed for running.
+
 ## 1.0.1
 
 - Fix issue with graceful shutdown when using `metricsManager.createNodejsMetrics()`

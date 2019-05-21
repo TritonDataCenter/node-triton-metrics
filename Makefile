@@ -5,7 +5,7 @@
 #
 
 #
-# Copyright (c) 2018, Joyent, Inc.
+# Copyright 2019 Joyent, Inc.
 #
 
 #
@@ -23,7 +23,7 @@ all $(ESLINT) $(PRETTIER):
 
 .PHONY: clean
 clean:
-	rm -rf node_modules
+	rm -rf node_modules triton-metrics-*.tgz
 
 .PHONY: check
 check:: check-version check-eslint check-prettier
